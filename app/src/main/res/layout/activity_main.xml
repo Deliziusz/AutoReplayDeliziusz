@@ -17,26 +17,24 @@
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="parent">
 
-        <TextView
+        <EditText
             android:id="@+id/txtMensaje"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
-            android:background="#A1020202"
-            android:clickable="false"
+            android:background="#CD000000"
             android:ems="10"
-            android:hint="Escribe aquí una respuesta"
             android:inputType="textMultiLine"
             android:lines="8"
             android:maxLines="10"
             android:minLines="6"
-            android:text="Escribe aquí una respuesta"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
+            android:text="Escribe una respuesta aquí"
+            android:textColor="#FBFBFB"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnMensaje"

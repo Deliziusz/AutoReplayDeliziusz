@@ -1,14 +1,76 @@
 package zombie.deliziusz.autoreplaydeliziusz;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.provider.Telephony;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 import android.os.Bundle;
+import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    EditText txtMensaje, txtNumero;
+    Button btnMensaje, btnNumero;
+    Receiver receiver;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        txtMensaje = findViewById(R.id.txtMensaje);
+        txtNumero = findViewById(R.id.txtNumero);
+        btnMensaje = findViewById(R.id.btnMensaje);
+        btnNumero = findViewById(R.id.btnNumero);
+
+        btnMensaje.setOnClickListener(this);
+        btnNumero.setOnClickListener(this);
+
+        App.mensaje = "Me mandaste un mensaje y yo te respondo con otro c:";
+
+        App.mensaje = "Me mandaste un mensaje y yo te respondo con otro c:";
+
+        String[] PERMISOS = {
+                Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS
+        };
+
+        if (!hasPermissions(this, PERMISOS)) {
+            ActivityCompat.requestPermissions(this, PERMISOS, 0);
+        }
+
+        IntentFilter intentFilter = new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION);
+        receiver = new Receiver();
+        registerReceiver(receiver, intentFilter);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btnMensaje:
+                App.mensaje = txtMensaje.getText().toString();
+                Toast.makeText(this, "El mensaje ahora es: " + "\n" + App.mensaje, Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btnNumero:
+                App.numero = txtNumero.getText().toString();
+                Toast.makeText(this, "El número ahora es: " + "\n" + App.numero, Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
